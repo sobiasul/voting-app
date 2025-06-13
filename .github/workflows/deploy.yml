@@ -15,7 +15,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker-compose up -d
+          docker-compose up -d -f docker-stack.yml
 
       # - name: Tag Docker image
       #   run: |
