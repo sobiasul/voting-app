@@ -13,9 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Checkov
+      - name: Set up Python virtual environment
         run: |
-          python3 -m pip install checkov
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install checkov
 
       - name: Run Checkov on Docker and YAML
         run: |
