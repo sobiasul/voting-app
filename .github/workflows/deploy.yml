@@ -1,4 +1,4 @@
-name: Build and Push to ECR
+name: CI/CD Build a compose for voting app
 
 on:
   push:
@@ -7,34 +7,13 @@ on:
 
 jobs:
   build:
-    runs-on: runner
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Python virtual environment
+
+      - name: deploy
         run: |
-          python3 -m venv venv
-          source venv/bin/activate
-          pip install checkov
-
-      - name: Run Checkov on Docker and YAML
-        run: |
-          checkov -d . --quiet || exit 1
-
-      - name: Build Docker image
-        run: |
-          docker-compose -f docker-stack.yml up -d
-
-      # - name: Tag Docker image
-      #   run: |
-      #     docker tag my-app:latest <your-account-id>.dkr.ecr.us-east-1.amazonaws.com/my-app-repo:latest
-
-      # - name: Login to ECR
-      #   run: |
-      #     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.us-east-1.amazonaws.com
-
-      # - name: Push to ECR
-      #   run: |
-      #     docker push <your-account-id>.dkr.ecr.us-east-1.amazonaws.com/my-app-repo:latest
+          docker-compose up -d
